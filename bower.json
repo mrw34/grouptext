@@ -1,0 +1,7 @@
+{
+  "name": "grouptext",
+  "dependencies": {
+    "moment": "2.1.0",
+    "bootstrap": "3.0.0-rc.2"
+  }
+}

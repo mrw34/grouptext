@@ -1,0 +1,97 @@
+<head>
+  <title></title>
+</head>
+
+<body>
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">GroupText</a>
+      </div>
+      <ul class="nav navbar-nav">
+        {{#if currentUser.profile.admin}}
+        <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
+        {{/if}}
+      </ul>
+      <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
+    </div>
+  </nav>
+  <div class="container">
+    {{renderPage}}
+  </div>
+</body>
+
+<template name="home">
+  <div class="row">
+    <div class="col-md-5">
+      <h2>Send</h2>
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Recipients <a href="#" style="margin-left: 1em"><small>Select all</small></a></label>
+            <select class="form-control" name="recipients" multiple size="12" class="form-control" required>
+              {{#each students}}
+              <option value="{{_id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-5 pull-right">
+      <h2>Receive</h2>
+      {{#each messages}}
+      <blockquote {{#unless to}}class="pull-right"{{/unless}} {{#if sent}}class="sent"{{/if}}>
+        <p>{{text}}</p>
+        <small>{{display_from}}{{display_to}} ({{display_date}})</small>
+      </blockquote>
+      {{else}}
+        <p class="text-muted">No messages yet</p>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="students">
+  <div class="row">
+    <div class="col-md-5">
+      <h2>New</h2>
+        <form>
+          <fieldset>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" class="form-control" name="phone" placeholder="e.g. 447813844116" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </fieldset>
+        </form>
+    </div>
+    <div class="col-md-5 pull-right">
+      <h2>Existing</h2>
+      <ul class="list-unstyled">
+        {{#each students}}
+          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{phone}}</span><small style="margin-left: 1em"><a href="#" data-id="{{_id}}">Delete</a></small></li>
+        {{else}}
+          <p class="text-muted">No students yet</p>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+
+<template name="loading">
+  <h1>Loading...</h1>
+</template>
+
+<template name="login">
+  <h1>Please sign in</h1>
+</template>
