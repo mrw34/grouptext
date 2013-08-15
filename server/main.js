@@ -13,14 +13,21 @@ Meteor.Router.add({
 Meteor.publish(null, function() {
   return Meteor.users.find();
 });
-Meteor.publish('students', function() {
-  var admin = Meteor.users.findOne(this.userId).profile.admin;
-  return Students.find({disabled: {$exists: false}}, {fields: admin ? {} : {phone: false}});
+Meteor.users.allow({
+  remove: function(userId) {
+    return Meteor.users.findOne(userId).profile.admin;
+  }
 });
-Meteor.publish('messages', function() {
-  return Messages.find({}, {fields: {messages: false}});
+Meteor.users.deny({
+  update: function() {
+    return true;
+  }
 });
 
+Meteor.publish('students', function() {
+  var admin = Meteor.users.findOne(this.userId).profile.admin;
+  return Students.find({}, {fields: admin ? {} : {phone: false}});
+});
 Students.allow({
   insert: function(userId) {
     return Meteor.users.findOne(userId).profile.admin;
@@ -29,13 +36,15 @@ Students.allow({
     return Meteor.users.findOne(userId).profile.admin;
   }
 });
+
+Meteor.publish('messages', function() {
+  return Messages.find({}, {fields: {messages: false}});
+});
 Messages.allow({
   insert: function() {
     return true;
   }
 });
-
-Meteor.users.deny({update: function() { return true; }});
 
 Accounts.emailTemplates.siteName = 'GroupText';
 Accounts.emailTemplates.from = 'GroupText <grouptext@markwoodbridge.com>';
