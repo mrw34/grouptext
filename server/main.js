@@ -47,7 +47,7 @@ Messages.allow({
 });
 
 Accounts.emailTemplates.siteName = 'GroupText';
-Accounts.emailTemplates.from = 'GroupText <grouptext@markwoodbridge.com>';
+Accounts.emailTemplates.from = 'GroupText <' + Meteor.settings.email + '>';
 
 Meteor.methods({
   addUser: function(name, email) {
@@ -72,32 +72,30 @@ var send = function(message) {
   return result;
 };
 
-//Meteor.startup(function() {
-  Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
-    _suppress_initial: true,
-    added: function(message) {
-      var messages = _.map(message.to, function(id) {
-        return {
-          from: Meteor.settings.phone,
-          to: Students.findOne(id).phone,
-          text: message.text
-        };
-      });
-      Messages.update(message._id, {$set: {
-        created_at: new Date(),
-        messages: messages
-      }});
-      _.each(messages, function(sms) {
-        console.log(sms);
-        var result = send(sms);
-        console.log(result.data);
-        if (result.data.messages[0].status === '0') {
-          Messages.update(message._id, {$set: {
-            sent: true
-          }});
-          email(message);
-        }
-      });
-    }
-  });
-//});
+Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
+  _suppress_initial: true,
+  added: function(message) {
+    var messages = _.map(message.to, function(id) {
+      return {
+        from: Meteor.settings.phone,
+        to: Students.findOne(id).phone,
+        text: message.text
+      };
+    });
+    Messages.update(message._id, {$set: {
+      created_at: new Date(),
+      messages: messages
+    }});
+    _.each(messages, function(sms) {
+      console.log(sms);
+      var result = send(sms);
+      console.log(result.data);
+      if (result.data.messages[0].status === '0') {
+        Messages.update(message._id, {$set: {
+          sent: true
+        }});
+        email(message);
+      }
+    });
+  }
+});

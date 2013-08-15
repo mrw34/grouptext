@@ -17,18 +17,11 @@ Meteor.Router.filters({
 });
 Meteor.Router.filter('requireLogin');
 
-// Meteor.subscribe('students', function() {
-//   Meteor.subscribe('messages');
-// });
 Meteor.subscribe('students');
 Meteor.subscribe('messages');
 
 Template.home.helpers({
-  students: function() {
-    return Students.find({}, {sort: {name: 1}});
-  },
   messages: function() {
-    // return Messages.find({}, {sort: {created_at: -1}});
     return Messages.find();
   },
   display_from: function() {
@@ -70,8 +63,8 @@ Template.home.events({
 });
 
 Template.students.helpers({
-  students: function() {
-    return Students.find({}, {sort: {name: 1}});
+  phone: function() {
+    return this.phone.replace(/^44/, '0');
   }
 });
 
@@ -79,7 +72,7 @@ Template.students.events({
   'submit form': function(e) {
     e.preventDefault();
     var name = $(e.target).find('input[name=name]').val();
-    var phone = $(e.target).find('input[name=phone]').val();
+    var phone = $(e.target).find('input[name=phone]').val().replace(/ /g, '').replace(/^0/, '44');
     Students.insert({name: name, phone: phone});
   },
   'click a': function(e) {
@@ -115,4 +108,7 @@ Handlebars.registerHelper('currently', function(page) {
 });
 Handlebars.registerHelper('application', function() {
   return Meteor.settings.application;
+});
+Handlebars.registerHelper('students', function() {
+  return Students.find({}, {sort: {name: 1}});
 });
