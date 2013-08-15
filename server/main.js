@@ -10,9 +10,9 @@ Meteor.Router.add({
   }
 });
 
-// Meteor.publish(null, function() {
-//   return Meteor.users.find();
-// });
+Meteor.publish(null, function() {
+  return Meteor.users.find();
+});
 Meteor.publish('students', function() {
   var admin = Meteor.users.findOne(this.userId).profile.admin;
   return Students.find({disabled: {$exists: false}}, {fields: admin ? {} : {phone: false}});
@@ -36,6 +36,21 @@ Messages.allow({
 });
 
 Meteor.users.deny({update: function() { return true; }});
+
+Accounts.emailTemplates.siteName = 'GroupText';
+Accounts.emailTemplates.from = 'GroupText <grouptext@markwoodbridge.com>';
+
+Meteor.methods({
+  addUser: function(name, email) {
+    Accounts.createUser({
+      email: email,
+      profile: {
+        name: name
+      }
+    });
+    Accounts.sendEnrollmentEmail(Meteor.users.findOne({'emails.address': email}));
+  }
+});
 
 var send = function(message) {
   var result = Meteor.http.get('https://rest.nexmo.com/sms/json', {params: {

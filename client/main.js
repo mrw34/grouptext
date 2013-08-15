@@ -1,6 +1,7 @@
 Meteor.Router.add({
   '/': 'home',
-  '/students': 'students'
+  '/students': 'students',
+  '/tutors': 'tutors'
 });
 
 Meteor.Router.filters({
@@ -84,6 +85,27 @@ Template.students.events({
   'click a': function(e) {
     e.preventDefault();
     Students.remove(this._id);
+  }
+});
+
+Template.tutors.helpers({
+  tutors: function() {
+    return Meteor.users.find({}, {sort: {name: 1}});
+  },
+  email: function() {
+    return this.emails[0].address;
+  }
+});
+
+Template.tutors.events({
+  'submit form': function(e) {
+    e.preventDefault();
+    var name = $(e.target).find('input[name=name]').val();
+    var email = $(e.target).find('input[name=email]').val();
+    Meteor.call('addUser', name, email);
+  },
+  'click a': function(e) {
+    e.preventDefault();
   }
 });
 

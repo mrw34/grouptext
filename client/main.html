@@ -11,6 +11,7 @@
       <ul class="nav navbar-nav">
         {{#if currentUser.profile.admin}}
         <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
+        <li {{#if currently 'tutors'}}class="active"{{/if}}><a href="/tutors">Tutors</a></li>
         {{/if}}
       </ul>
       <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
@@ -82,6 +83,37 @@
           <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{phone}}</span><small style="margin-left: 1em"><a href="#" data-id="{{_id}}">Delete</a></small></li>
         {{else}}
           <p class="text-muted">No students yet</p>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+
+<template name="tutors">
+  <div class="row">
+    <div class="col-md-5">
+      <h2>New</h2>
+        <form>
+          <fieldset>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </fieldset>
+        </form>
+    </div>
+    <div class="col-md-5 pull-right">
+      <h2>Existing</h2>
+      <ul class="list-unstyled">
+        {{#each tutors}}
+          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{profile.name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{email}}</span><!--<small style="margin-left: 1em"><a href="#" data-id="{{_id}}">Delete</a></small>--></li>
+        {{else}}
+          <p class="text-muted">No tutors yet</p>
         {{/each}}
       </ul>
     </div>
