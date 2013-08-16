@@ -8,3 +8,7 @@ accounts-password
 accounts-ui
 http
 email
+standard-app-packages
+router
+page-js-ie-support
+HTML5-History-API

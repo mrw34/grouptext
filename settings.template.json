@@ -1,7 +1,8 @@
 {
-	"callback": "13ee24b7-8212-40bf-ae55-32e1e3c54b66",
+	"tel": "4412345678",
 	"api_key": "0123abcd",
 	"api_secret": "0123abcd",
-	"phone": "4412345678",
-	"email": "username@example.com"
+	"callback_path": "13ee24b7-8212-40bf-ae55-32e1e3c54b66",
+	"admin_email": "username@yourdomain.com",
+	"admin_name": "John Doe"
 }

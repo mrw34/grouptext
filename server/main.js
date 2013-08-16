@@ -1,6 +1,6 @@
 Meteor.Router.add({
   '/:path': function(path) {
-    if (path === Meteor.settings.callback) {
+    if (path === Meteor.settings.callback_path) {
       var message = to_message(this.request.query);
       Messages.insert(message);
       email(message);
@@ -25,7 +25,7 @@ Meteor.users.deny({
 });
 
 Meteor.publish('students', function() {
-  var admin = Meteor.users.findOne(this.userId).profile.admin;
+  var admin = this.userId && Meteor.users.findOne(this.userId).profile.admin;
   return Students.find({}, {fields: admin ? {} : {phone: false}});
 });
 Students.allow({
@@ -47,7 +47,7 @@ Messages.allow({
 });
 
 Accounts.emailTemplates.siteName = 'GroupText';
-Accounts.emailTemplates.from = 'GroupText <' + Meteor.settings.email + '>';
+Accounts.emailTemplates.from = 'GroupText <' + Meteor.settings.admin_email + '>';
 
 Meteor.methods({
   addUser: function(name, email) {
@@ -77,7 +77,7 @@ Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
   added: function(message) {
     var messages = _.map(message.to, function(id) {
       return {
-        from: Meteor.settings.phone,
+        from: Meteor.settings.tel,
         to: Students.findOne(id).phone,
         text: message.text
       };
@@ -97,5 +97,21 @@ Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
         email(message);
       }
     });
+  }
+});
+
+Meteor.startup(function() {
+  if (!Meteor.users.findOne()) {
+    var user = {
+      email: Meteor.settings.admin_email,
+      password: Random.id(),
+      profile: {
+        name: Meteor.settings.admin_name,
+        admin: true
+      }
+    };
+    Accounts.createUser(user);
+    Meteor.users.update({'emails.address': user.email}, {$set: {'emails.0.verified': true}});
+    console.log('Admin password:', user.password);
   }
 });

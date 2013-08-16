@@ -8,7 +8,7 @@ Meteor.Router.filters({
   requireLogin: function(page) {
     if (Meteor.loggingIn()) {
       return 'loading';
-    } else if (Meteor.user()) {
+    } else if (Meteor.userId()) {
       return page;
     } else {
       return 'login';
@@ -16,9 +16,6 @@ Meteor.Router.filters({
   }
 });
 Meteor.Router.filter('requireLogin');
-
-Meteor.subscribe('students');
-Meteor.subscribe('messages');
 
 Template.home.helpers({
   messages: function() {
@@ -55,6 +52,7 @@ Template.home.events({
       text: values.message[0]
     };
     Messages.insert(message);
+    e.target.reset();
   },
   'click a': function(e) {
     e.preventDefault();
@@ -74,6 +72,7 @@ Template.students.events({
     var name = $(e.target).find('input[name=name]').val();
     var phone = $(e.target).find('input[name=phone]').val().replace(/ /g, '').replace(/^0/, '44');
     Students.insert({name: name, phone: phone});
+    e.target.reset();
   },
   'click a': function(e) {
     e.preventDefault();
@@ -96,6 +95,7 @@ Template.tutors.events({
     var name = $(e.target).find('input[name=name]').val();
     var email = $(e.target).find('input[name=email]').val();
     Meteor.call('addUser', name, email);
+    e.target.reset();
   },
   'click a': function(e) {
     e.preventDefault();
@@ -106,9 +106,9 @@ Template.tutors.events({
 Handlebars.registerHelper('currently', function(page) {
   return Meteor.Router.page() === page;
 });
-Handlebars.registerHelper('application', function() {
-  return Meteor.settings.application;
-});
 Handlebars.registerHelper('students', function() {
   return Students.find({}, {sort: {name: 1}});
 });
+
+Meteor.subscribe('students');
+Meteor.subscribe('messages');

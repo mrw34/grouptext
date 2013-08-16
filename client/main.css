@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-	padding-top: 60px;
+	padding-top: 50px;
 	font-family: 'Open Sans', sans-serif;
 }
 
 h2 {
+	margin-top: 1em;
 	margin-bottom: 0.8em;
 }
 
