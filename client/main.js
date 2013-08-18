@@ -105,7 +105,9 @@ Template.tutors.events({
   },
   'click a': function(e) {
     e.preventDefault();
-    Meteor.users.remove(this._id);
+    if (this._id !== Meteor.userId()) {
+      Meteor.users.remove(this._id);
+    }
   }
 });
 
