@@ -19,7 +19,7 @@ Meteor.Router.filter('requireLogin');
 
 Template.home.helpers({
   messages: function() {
-    return Messages.find();
+    return Messages.find({}, {sort: {created_at: -1}});
   },
   display_from: function() {
     if (this.to) {
