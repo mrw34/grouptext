@@ -33,10 +33,10 @@
 
 <template name="home">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-5 clearfix">
       <h2>Messages</h2>
       {{#each messages}}
-      <blockquote {{#unless to}}class="pull-right"{{/unless}} {{#if sent}}class="sent"{{/if}}>
+      <blockquote class="{{#unless to}}pull-right{{/unless}} {{#if sent}}sent{{/if}}">
         <p>{{text}}</p>
         <small>{{display_from}}{{display_to}} ({{display_date}})</small>
       </blockquote>
@@ -44,7 +44,7 @@
         <p class="text-muted">No messages yet</p>
       {{/each}}
     </div>
-    <div class="col-md-5 pull-right">
+    <div class="col-md-5 col-md-offset-2">
       <h2>New message</h2>
       <form>
         <fieldset>
@@ -79,7 +79,7 @@
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-5 pull-right">
+    <div class="col-md-5 col-md-offset-2">
       <h2>New student</h2>
       <form>
         <fieldset>
@@ -110,7 +110,7 @@
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-5 pull-right">
+    <div class="col-md-5 col-md-offset-2">
       <h2>New tutor</h2>
       <form>
         <fieldset>
