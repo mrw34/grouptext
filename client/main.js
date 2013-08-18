@@ -33,11 +33,13 @@ Template.home.helpers({
     return 'Unknown';
   },
   display_to: function() {
-    if (this.to && this.to.length === 1) {
-      var student = Students.findOne(this.to[0]);
-      if (student) {
-        return ' to ' + student.name;
-      }
+    var names = _.chain(this.to).map(function(id) {
+      return Students.findOne(id);
+    }).compact().map(function(student) {
+      return student.name;
+    }).value();
+    if (names.length) {
+      return ' to ' + (names.length <= 3 ? names.join(', ') : (names.length + ' students'));
     }
   },
   display_date: function() {
@@ -52,7 +54,8 @@ Template.home.events({
     var message = {
       from: Meteor.user().profile.name,
       to: values.recipients,
-      text: values.message[0]
+      text: values.message[0],
+      created_at: new Date()
     };
     Messages.insert(message);
     e.target.reset();
