@@ -24,10 +24,13 @@ Template.home.helpers({
   display_from: function() {
     if (this.to) {
       return this.from;
-    } else {
+    } else if (this.from) {
       var student = Students.findOne(this.from);
-      return student ? student.name : this.from;
+      if (student) {
+        return student.name;
+      }
     }
+    return 'Unknown';
   },
   display_to: function() {
     if (this.to && this.to.length === 1) {

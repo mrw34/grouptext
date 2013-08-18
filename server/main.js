@@ -11,7 +11,9 @@ Meteor.Router.add({
 });
 
 Meteor.publish(null, function() {
-  return Meteor.users.find();
+  if (this.userId) {
+    return Meteor.users.find();
+  }
 });
 Meteor.users.allow({
   remove: function(userId) {
@@ -25,8 +27,9 @@ Meteor.users.deny({
 });
 
 Meteor.publish('students', function() {
-  var admin = this.userId && Meteor.users.findOne(this.userId).profile.admin;
-  return Students.find({}, {fields: admin ? {} : {phone: false}});
+  if (this.userId) {
+    return Students.find({}, {fields: Meteor.users.findOne(this.userId).profile.admin ? {} : {phone: false}});
+  }
 });
 Students.allow({
   insert: function(userId) {
@@ -38,7 +41,9 @@ Students.allow({
 });
 
 Meteor.publish('messages', function() {
-  return Messages.find({}, {fields: {messages: false}});
+  if (this.userId) {
+    return Messages.find({}, {fields: {messages: false}});
+  }
 });
 Messages.allow({
   insert: function() {
@@ -61,6 +66,21 @@ Meteor.methods({
   }
 });
 
+var to_message = function(sms) {
+  var message = {
+    text: sms.text,
+    created_at: moment(sms['message-timestamp']).toDate(),
+    messages: [sms]
+  };
+  var student = Students.findOne({'phone': sms.msisdn});
+  if (student) {
+    _.extend(message, {
+      from: student._id
+    })
+  }
+  return message;
+};
+
 var send = function(message) {
   var result = Meteor.http.get('https://rest.nexmo.com/sms/json', {params: {
     api_key: Meteor.settings.api_key,
@@ -70,6 +90,21 @@ var send = function(message) {
     text: message.text
   }});
   return result;
+};
+
+var email = function(message) {
+  Meteor.users.find({'profile.admin': true}).forEach(function(user) {
+    var email = {
+      to: user.emails[0].address,
+      from: 'GroupText <' + Meteor.settings.admin_email + '>',
+      subject: 'New message',
+      text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
+        (message.to ? '\nTo: ' + _.map(message.to, function(id) { return Students.findOne(id).name; }).join(', ') : '') +
+        '\nMessage: ' + message.text
+    };
+    console.log(email);
+    Email.send(email);
+  });
 };
 
 Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({

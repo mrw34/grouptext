@@ -1,20 +1,29 @@
 <head>
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GroupText</title>
+  <link href="http://markwoodbridge.com" title="Mark Woodbridge" rel="author"/>
 </head>
 
 <body>
   <nav class="navbar navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <a class="navbar-brand" href="/">GroupText</a>
       </div>
-      <ul class="nav navbar-nav">
-        {{#if currentUser.profile.admin}}
-        <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
-        <li {{#if currently 'tutors'}}class="active"{{/if}}><a href="/tutors">Tutors</a></li>
-        {{/if}}
-      </ul>
-      <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          {{#if currentUser.profile.admin}}
+          <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
+          <li {{#if currently 'tutors'}}class="active"{{/if}}><a href="/tutors">Tutors</a></li>
+          {{/if}}
+        </ul>
+        <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
+      </div>
     </div>
   </nav>
   <div class="container">
@@ -25,7 +34,18 @@
 <template name="home">
   <div class="row">
     <div class="col-md-5">
-      <h2>Send</h2>
+      <h2>Messages</h2>
+      {{#each messages}}
+      <blockquote {{#unless to}}class="pull-right"{{/unless}} {{#if sent}}class="sent"{{/if}}>
+        <p>{{text}}</p>
+        <small>{{display_from}}{{display_to}} ({{display_date}})</small>
+      </blockquote>
+      {{else}}
+        <p class="text-muted">No messages yet</p>
+      {{/each}}
+    </div>
+    <div class="col-md-5 pull-right">
+      <h2>New message</h2>
       <form>
         <fieldset>
           <div class="form-group">
@@ -44,40 +64,13 @@
         </fieldset>
       </form>
     </div>
-    <div class="col-md-5 pull-right">
-      <h2>Receive</h2>
-      {{#each messages}}
-      <blockquote {{#unless to}}class="pull-right"{{/unless}} {{#if sent}}class="sent"{{/if}}>
-        <p>{{text}}</p>
-        <small>{{display_from}}{{display_to}} ({{display_date}})</small>
-      </blockquote>
-      {{else}}
-        <p class="text-muted">No messages yet</p>
-      {{/each}}
-    </div>
   </div>
 </template>
 
 <template name="students">
   <div class="row">
     <div class="col-md-5">
-      <h2>New</h2>
-        <form>
-          <fieldset>
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control" name="name" required>
-            </div>
-            <div class="form-group">
-              <label>Phone</label>
-              <input type="text" class="form-control" name="phone" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </fieldset>
-        </form>
-    </div>
-    <div class="col-md-5 pull-right">
-      <h2>Existing</h2>
+      <h2>Students</h2>
       <ul class="list-unstyled">
         {{#each students}}
           <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{phone}}</span><small style="margin-left: 1em"><a href="#" data-id="{{_id}}">Delete</a></small></li>
@@ -86,29 +79,29 @@
         {{/each}}
       </ul>
     </div>
+    <div class="col-md-5 pull-right">
+      <h2>New student</h2>
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" class="form-control" name="phone" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </fieldset>
+      </form>
+    </div>
   </div>
 </template>
 
 <template name="tutors">
   <div class="row">
     <div class="col-md-5">
-      <h2>New</h2>
-        <form>
-          <fieldset>
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control" name="name" required>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" class="form-control" name="email" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </fieldset>
-        </form>
-    </div>
-    <div class="col-md-5 pull-right">
-      <h2>Existing</h2>
+      <h2>Tutors</h2>
       <ul class="list-unstyled">
         {{#each tutors}}
           <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{profile.name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{email}}</span><small style="margin-left: 1em"><a href="#" data-id="{{_id}}">Delete</a></small></li>
@@ -116,6 +109,22 @@
           <p class="text-muted">No tutors yet</p>
         {{/each}}
       </ul>
+    </div>
+    <div class="col-md-5 pull-right">
+      <h2>New tutor</h2>
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </fieldset>
+      </form>
     </div>
   </div>
 </template>
