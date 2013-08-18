@@ -76,7 +76,7 @@ var to_message = function(sms) {
   if (student) {
     _.extend(message, {
       from: student._id
-    })
+    });
   }
   return message;
 };
