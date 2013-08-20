@@ -8,20 +8,21 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
+        {{#if currentUser.profile.admin}}
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
         </button>
+        {{/if}}
         <a class="navbar-brand" href="/">GroupText</a>
       </div>
       <div class="collapse navbar-collapse">
+        {{#if currentUser.profile.admin}}
         <ul class="nav navbar-nav">
-          {{#if currentUser.profile.admin}}
           <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
           <li {{#if currently 'tutors'}}class="active"{{/if}}><a href="/tutors">Tutors</a></li>
-          {{/if}}
         </ul>
+        {{/if}}
         <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
       </div>
     </div>
