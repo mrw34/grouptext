@@ -99,8 +99,8 @@ var email = function(message) {
       from: 'GroupText <' + Meteor.settings.admin_email + '>',
       subject: 'New message',
       text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
-        (message.to ? '\nTo: ' + _.map(message.to, function(id) { return Students.findOne(id).name; }).join(', ') : '') +
-        '\nMessage: ' + message.text
+      (message.to ? '\nTo: ' + _.map(message.to, function(id) { return Students.findOne(id).name; }).join(', ') : '') +
+      '\nMessage: ' + message.text
     };
     console.log(email);
     Email.send(email);
