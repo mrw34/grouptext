@@ -82,7 +82,7 @@ var to_message = function(sms) {
 };
 
 var send = function(message) {
-  var result = Meteor.http.get('https://rest.nexmo.com/sms/json', {params: {
+  var result = HTTP.get('https://rest.nexmo.com/sms/json', {params: {
     api_key: Meteor.settings.api_key,
     api_secret: Meteor.settings.api_secret,
     from: message.from,
