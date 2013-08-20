@@ -3,7 +3,6 @@ Meteor.Router.add({
   '/students': 'students',
   '/tutors': 'tutors'
 });
-
 Meteor.Router.filters({
   requireLogin: function(page) {
     if (Meteor.loggingIn()) {
@@ -46,7 +45,6 @@ Template.home.helpers({
     return moment(this.created_at).calendar();
   }
 });
-
 Template.home.events({
   'submit form': function(e) {
     e.preventDefault();
@@ -71,7 +69,6 @@ Template.students.helpers({
     return this.phone.replace(/^44/, '0');
   }
 });
-
 Template.students.events({
   'submit form': function(e) {
     e.preventDefault();
@@ -94,7 +91,6 @@ Template.tutors.helpers({
     return this.emails[0].address;
   }
 });
-
 Template.tutors.events({
   'submit form': function(e) {
     e.preventDefault();
