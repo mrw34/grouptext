@@ -48,21 +48,19 @@
     <div class="col-md-5 col-md-offset-1">
       <h2>New message</h2>
       <form>
-        <fieldset>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Recipients <a href="#" style="margin-left: 1em"><small>Select all</small></a></label>
-            <select class="form-control" name="recipients" multiple size="12" class="form-control" required>
-              {{#each students}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Send</button>
-        </fieldset>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Recipients <a href="#" style="margin-left: 1em"><small>Select all</small></a></label>
+          <select class="form-control" name="recipients" multiple size="12" class="form-control" required>
+            {{#each students}}
+            <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
       </form>
     </div>
   </div>
@@ -83,17 +81,15 @@
     <div class="col-md-5 col-md-offset-1">
       <h2>New student</h2>
       <form>
-        <fieldset>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" required>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" name="phone" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </fieldset>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="text" class="form-control" name="phone" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
       </form>
     </div>
   </div>
@@ -114,17 +110,15 @@
     <div class="col-md-5 col-md-offset-1">
       <h2>New tutor</h2>
       <form>
-        <fieldset>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" required>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </fieldset>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
       </form>
     </div>
   </div>
