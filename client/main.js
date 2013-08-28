@@ -87,9 +87,12 @@ Template.students.events({
       reader.result.split(/BEGIN:VCARD/).forEach(function(vcard) {
         var tel = vcard.match(/TEL;(?:TYPE=)CELL:([0-9-]+)/) || vcard.match(/TEL;(?:TYPE=)[A-Z]+:([0-9-]+)/);
         if (tel) {
-          var fn = vcard.match(/FN:(.*)/);
-          if (fn) {
-            Students.insert({name: fn[1], phone: tel[1].replace(/-/g, '').replace(/^0/, '44')});
+          var phone = tel[1].replace(/-/g, '').replace(/^0/, '44');
+          if (!Students.findOne({phone: phone})) {
+            var fn = vcard.match(/FN:(.*)/);
+            if (fn) {
+              Students.insert({name: fn[1], phone: phone});
+            }
           }
         }
       });
