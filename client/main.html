@@ -54,7 +54,7 @@
           <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
         </div>
         <div class="form-group">
-          <label>Recipients <a href="#" style="margin-left: 1em"><small>Select all</small></a></label>
+          <label>Recipients{{#if currentUser.profile.admin}} <a href="#" style="margin-left: 1em"><small>Select all</small></a>{{/if}}</label>
           <select class="form-control" name="recipients" multiple size="12" class="form-control" required>
             {{#each students}}
             <option value="{{_id}}">{{name}}</option>
