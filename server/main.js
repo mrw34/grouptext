@@ -99,7 +99,7 @@ var email = function(message) {
       from: 'GroupText <' + Meteor.settings.admin_email + '>',
       subject: 'New message',
       text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
-      (message.to ? '\nTo: ' + _.map(message.to, function(id) { return Students.findOne(id).name; }).join(', ') : '') +
+      (message.to ? '\nTo: ' + message.to.map(function(id) { return Students.findOne(id).name; }).join(', ') : '') +
       '\nMessage: ' + message.text
     };
     console.log(email);
@@ -110,7 +110,7 @@ var email = function(message) {
 Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
   _suppress_initial: true,
   added: function(message) {
-    var messages = _.map(message.to, function(id) {
+    var messages = message.to.map(function(id) {
       return {
         from: Meteor.settings.tel,
         to: Students.findOne(id).phone,
@@ -121,7 +121,7 @@ Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
       created_at: new Date(),
       messages: messages
     }});
-    _.each(messages, function(sms) {
+    messages.forEach(function(sms) {
       console.log(sms);
       var result = send(sms);
       console.log(result.data);
