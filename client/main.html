@@ -108,7 +108,7 @@
       <h2>Tutors</h2>
       <ul class="list-unstyled">
         {{#each tutors}}
-          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{profile.name}}</span><span style="display: table-cell; padding-right: 1em">{{#if profile.admin}}<span class="label label-primary">admin</span>{{/if}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{email}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
+          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{profile.name}}</span><span style="display: table-cell; padding-right: 1em"><span class="label label-primary">admin</span></span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{email}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
         {{else}}
           <li class="text-muted">No tutors yet</li>
         {{/each}}
