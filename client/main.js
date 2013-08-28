@@ -80,6 +80,21 @@ Template.students.events({
   'click a': function(e) {
     e.preventDefault();
     Students.remove(this._id);
+  },
+  'change input[type=file]': function(e) {
+    var reader = new FileReader();
+    reader.onload = function() {
+      reader.result.split(/BEGIN:VCARD/).forEach(function(vcard) {
+        var tel = vcard.match(/TEL;(?:TYPE=)CELL:([0-9-]+)/) || vcard.match(/TEL;(?:TYPE=)[A-Z]+:([0-9-]+)/);
+        if (tel) {
+          var fn = vcard.match(/FN:(.*)/);
+          if (fn) {
+            Students.insert({name: fn[1], phone: tel[1].replace(/-/g, '').replace(/^0/, '44')});
+          }
+        }
+      });
+    };
+    reader.readAsText(e.target.files[0]);
   }
 });
 
