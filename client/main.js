@@ -67,6 +67,9 @@ Template.home.events({
 Template.students.helpers({
   phone: function() {
     return this.phone.replace(/^44/, '0');
+  },
+  filereader: function() {
+    return !!window.FileReader;
   }
 });
 Template.students.events({
