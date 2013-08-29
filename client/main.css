@@ -26,3 +26,11 @@ blockquote.pull-right {
 button[type=submit] {
 	margin-top: 1em;
 }
+
+.list-unstyled > li > span {
+	padding-bottom: 4px;
+}
+
+.list-unstyled > li > span + span {
+	padding-left: 1em;
+}

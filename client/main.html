@@ -50,16 +50,17 @@
       <h2>New message</h2>
       <form>
         <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
-        </div>
-        <div class="form-group">
           <label>Recipients{{#if currentUser.profile.admin}} <a href="#" style="margin-left: 1em"><small>Select all</small></a>{{/if}}</label>
-          <select class="form-control" name="recipients" multiple size="12" class="form-control" required>
+          <select class="form-control" name="recipients" multiple size="10" class="form-control" required>
             {{#each students}}
             <option value="{{_id}}">{{name}}</option>
             {{/each}}
           </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" class="form-control" rows="4" maxlength="160" required></textarea>
+          <p class="help-block">Don't forget to sign your message!</p>
         </div>
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
@@ -73,7 +74,7 @@
       <h2>Students</h2>
       <ul class="list-unstyled">
         {{#each students}}
-          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{name}}</span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{phone}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
+          <li style="display: table-row"><span style="display: table-cell;">{{name}}</span><span style="display: table-cell;" class="text-muted">{{phone}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
         {{else}}
           <li class="text-muted">No students yet</li>
         {{/each}}
@@ -110,7 +111,7 @@
       <h2>Tutors</h2>
       <ul class="list-unstyled">
         {{#each tutors}}
-          <li style="display: table-row"><span style="display: table-cell; padding-right: 1em">{{profile.name}}</span><span style="display: table-cell; padding-right: 1em"><span class="label label-primary">admin</span></span><span class="text-muted" style="display: table-cell; padding-right: 1em">{{email}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
+          <li style="display: table-row"><span style="display: table-cell">{{profile.name}}</span><span style="display: table-cell"><span class="label label-primary">admin</span></span><span style="display: table-cell" class="text-muted">{{email}}</span><span style="display: table-cell"><a href="#" data-id="{{_id}}">Delete</a></span></li>
         {{else}}
           <li class="text-muted">No tutors yet</li>
         {{/each}}
