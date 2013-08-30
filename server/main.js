@@ -126,9 +126,9 @@ Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
         Messages.update(message._id, {$set: {
           sent: true
         }});
-        email(message);
       }
     });
+    email(message);
   }
 });
 
