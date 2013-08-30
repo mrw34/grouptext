@@ -106,7 +106,7 @@ Template.students.events({
 
 Template.tutors.helpers({
   tutors: function() {
-    return Meteor.users.find({}, {sort: {name: 1}});
+    return Meteor.users.find({}, {sort: {'profile.name': 1}});
   },
   email: function() {
     return this.emails[0].address;
