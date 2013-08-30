@@ -129,11 +129,11 @@ Template.tutors.events({
   }
 });
 
-Handlebars.registerHelper('currently', function(page) {
-  return Meteor.Router.page() === page;
-});
 Handlebars.registerHelper('students', function() {
   return Students.find({}, {sort: {name: 1}});
+});
+Handlebars.registerHelper('equal', function(a, b) {
+  return a === b;
 });
 
 Meteor.subscribe('students');

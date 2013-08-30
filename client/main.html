@@ -20,8 +20,8 @@
       <div class="collapse navbar-collapse">
         {{#if currentUser.profile.admin}}
         <ul class="nav navbar-nav">
-          <li {{#if currently 'students'}}class="active"{{/if}}><a href="/students">Students</a></li>
-          <li {{#if currently 'tutors'}}class="active"{{/if}}><a href="/tutors">Tutors</a></li>
+          <li {{#if equal currentPage 'students'}}class="active"{{/if}}><a href="{{studentsPath}}">Students</a></li>
+          <li {{#if equal currentPage 'tutors'}}class="active"{{/if}}><a href="{{tutorsPath}}">Tutors</a></li>
         </ul>
         {{/if}}
         <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
@@ -29,7 +29,7 @@
     </div>
   </nav>
   <div class="container">
-    {{renderPage}}
+    {{#isolate}}{{renderPage}}{{/isolate}}
   </div>
 </body>
 
