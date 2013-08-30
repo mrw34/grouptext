@@ -88,7 +88,7 @@ Template.students.events({
     var reader = new FileReader();
     reader.onload = function() {
       reader.result.split(/BEGIN:VCARD/).forEach(function(vcard) {
-        var tel = vcard.match(/TEL;(?:TYPE=)CELL:([0-9-]+)/) || vcard.match(/TEL;(?:TYPE=)[A-Z]+:([0-9-]+)/);
+        var tel = vcard.match(/TEL;(?:TYPE=)CELL:([0-9-]+)/) || vcard.match(/TEL;(?:TYPE=)[A-Z]+:[+]?([0-9-]+)/);
         if (tel) {
           var phone = tel[1].replace(/-/g, '').replace(/^0/, '44');
           if (!Students.findOne({phone: phone})) {
@@ -101,6 +101,7 @@ Template.students.events({
       });
     };
     reader.readAsText(e.target.files[0]);
+    e.target.parentNode.parentNode.reset();
   }
 });
 
