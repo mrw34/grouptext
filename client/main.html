@@ -50,7 +50,7 @@
       <h2>New message</h2>
       <form>
         <div class="form-group">
-          <label>Recipients{{#if currentUser.profile.admin}} <a href="#" style="margin-left: 1em"><small>Select all</small></a>{{/if}}</label>
+          <label>Recipients{{#if currentUser.profile.admin}} <a href="#"><small>Select all</small></a>{{/if}}</label>
           <select class="form-control" name="recipients" multiple size="10" class="form-control" required>
             {{#each students}}
             <option value="{{_id}}">{{name}}</option>

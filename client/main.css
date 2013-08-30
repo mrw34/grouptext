@@ -7,8 +7,8 @@ body {
 }
 
 h2 {
-	margin-top: 1em;
-	margin-bottom: 0.8em;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
 }
 
 blockquote {
@@ -23,14 +23,14 @@ blockquote.pull-right {
 	border-right-color: #3276b1;
 }
 
-button[type=submit] {
-	margin-top: 1em;
-}
-
 .list-unstyled > li > span {
-	padding-bottom: 4px;
+	padding-bottom: 0.2em;
 }
 
 .list-unstyled > li > span + span {
+	padding-left: 1em;
+}
+
+label > a {
 	padding-left: 1em;
 }
