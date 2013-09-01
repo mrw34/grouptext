@@ -53,6 +53,11 @@ Accounts.emailTemplates.from = 'GroupText <' + Meteor.settings.admin_email + '>'
 
 Meteor.methods({
   addUser: function(name, email) {
+    check(name, String);
+    check(email, String);
+    if (!Meteor.users.findOne(this.userId).profile.admin) {
+      throw new Meteor.Error(401, 'Unauthorized');
+    }
     Accounts.createUser({
       email: email,
       profile: {
