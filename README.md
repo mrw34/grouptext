@@ -4,6 +4,10 @@ GroupText is a privacy-preserving group SMS platform originally developed for th
 
 It is built with [Meteor](http://www.meteor.com/), [Meteor Router](https://github.com/tmeasday/meteor-router), [Moment.js](http://momentjs.com/) and [Bootstrap](http://getbootstrap.com/) and uses the [Nexmo](https://www.nexmo.com/) platform.
 
+Screenshot
+----------
+![Screenshot](https://dl.dropboxusercontent.com/u/1120779/GroupText%20Screenshot.png)
+
 Run
 ---
 1. Download and unzip [the latest release](https://github.com/mrw34/grouptext/releases)
