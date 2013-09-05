@@ -36,7 +36,7 @@
 
 <template name="home">
   <div class="row">
-    <div class="col-md-6 clearfix">
+    <div class="col-sm-6 clearfix">
       <h2>Messages</h2>
       {{#each messages}}
       <blockquote class="{{#unless to}}pull-right{{/unless}} {{#if sent}}sent{{/if}}">
@@ -47,7 +47,7 @@
         <p class="text-muted">No messages yet</p>
       {{/each}}
     </div>
-    <div class="col-md-5 col-md-offset-1">
+    <div class="col-sm-5 col-sm-offset-1">
       <h2>New message</h2>
       <form>
         <div class="form-group">
@@ -71,7 +71,7 @@
 
 <template name="students">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <h2>Students</h2>
       <ul class="list-unstyled">
         {{#each students}}
@@ -81,7 +81,7 @@
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-5 col-md-offset-1">
+    <div class="col-sm-5 col-sm-offset-1">
       <h2>New student</h2>
       <form>
         <div class="form-group">
@@ -108,7 +108,7 @@
 
 <template name="tutors">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <h2>Tutors</h2>
       <ul class="list-unstyled">
         {{#each tutors}}
@@ -118,7 +118,7 @@
         {{/each}}
       </ul>
     </div>
-    <div class="col-md-5 col-md-offset-1">
+    <div class="col-sm-5 col-sm-offset-1">
       <h2>New tutor</h2>
       <form>
         <div class="form-group">
