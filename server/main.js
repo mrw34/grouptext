@@ -84,14 +84,15 @@ var to_message = function(sms) {
 };
 
 var send = function(message) {
-  var result = HTTP.get('https://rest.nexmo.com/sms/json', {params: {
-    api_key: Meteor.settings.api_key,
-    api_secret: Meteor.settings.api_secret,
-    from: message.from,
-    to: message.to,
-    text: message.text
-  }});
-  return result;
+  return Meteor.settings.api_key ?
+    HTTP.get('https://rest.nexmo.com/sms/json', {params: {
+      api_key: Meteor.settings.api_key,
+      api_secret: Meteor.settings.api_secret,
+      from: message.from,
+      to: message.to,
+      text: message.text
+    }}) :
+    { data: { messages: [ {status: '0' } ] } };
 };
 
 var email = function(message) {

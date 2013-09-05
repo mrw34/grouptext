@@ -21,8 +21,8 @@
       <div class="collapse navbar-collapse">
         {{#if currentUser.profile.admin}}
         <ul class="nav navbar-nav">
-          <li {{#if equal currentPage 'students'}}class="active"{{/if}}><a href="{{studentsPath}}">Students</a></li>
-          <li {{#if equal currentPage 'tutors'}}class="active"{{/if}}><a href="{{tutorsPath}}">Tutors</a></li>
+          <li {{#if eq currentPage 'students'}}class="active"{{/if}}><a href="{{studentsPath}}">Students</a></li>
+          <li {{#if eq currentPage 'tutors'}}class="active"{{/if}}><a href="{{tutorsPath}}">Tutors</a></li>
         </ul>
         {{/if}}
         <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
@@ -41,7 +41,7 @@
       {{#each messages}}
       <blockquote class="{{#unless to}}pull-right{{/unless}} {{#if sent}}sent{{/if}}">
         <p>{{text}}</p>
-        <small>{{display_from}}{{display_to}} ({{display_date}})</small>
+        <small>{{#if display_from}}{{#if display_from._id}}<a href="#">{{display_from.name}}</a>{{else}}{{display_from}}{{/if}}{{else}}Unknown{{/if}}{{#if to}} to <a href="#">{{#if lte recipients.length 2}}{{#each recipients}}<span class="csv">{{#if name}}{{name}}{{else}}Unknown{{/if}}</span>{{/each}}{{else}}{{recipients.length}} students{{/if}}{{/if}}</a> ({{display_date}})</small>
       </blockquote>
       {{else}}
         <p class="text-muted">No messages yet</p>

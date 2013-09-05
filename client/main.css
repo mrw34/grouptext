@@ -34,3 +34,11 @@ blockquote.pull-right {
 label > a {
 	padding-left: 1em;
 }
+
+span.csv:after {
+    content: ', '
+}
+
+span.csv:last-child:after {
+    content: ''
+}

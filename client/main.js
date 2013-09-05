@@ -24,22 +24,13 @@ Template.home.helpers({
     if (this.to) {
       return this.from;
     } else if (this.from) {
-      var student = Students.findOne(this.from);
-      if (student) {
-        return student.name;
-      }
+      return Students.findOne(this.from);
     }
-    return 'Unknown';
   },
-  display_to: function() {
-    var names = _.chain(this.to).map(function(id) {
+  recipients: function() {
+    return this.to.map(function(id) {
       return Students.findOne(id);
-    }).compact().map(function(student) {
-      return student.name;
-    }).value();
-    if (names.length) {
-      return ' to ' + (names.length <= 3 ? names.join(', ') : (names.length + ' students'));
-    }
+    });
   },
   display_date: function() {
     return moment(this.created_at).calendar();
@@ -58,9 +49,16 @@ Template.home.events({
     Messages.insert(message);
     e.target.reset();
   },
-  'click a': function(e) {
+  'click label a': function(e) {
     e.preventDefault();
     $('option').prop('selected', true);
+  },
+  'click blockquote a': function(e) {
+    e.preventDefault();
+    $('option').prop('selected', false);
+    _.each(this.to ? this.to : [this.from], function(id) {
+      $('option[value=' + id + ']').prop('selected', true);
+    });
   }
 });
 
@@ -132,8 +130,11 @@ Template.tutors.events({
 Handlebars.registerHelper('students', function() {
   return Students.find({}, {sort: {name: 1}});
 });
-Handlebars.registerHelper('equal', function(a, b) {
+Handlebars.registerHelper('eq', function(a, b) {
   return a === b;
+});
+Handlebars.registerHelper('lte', function(a, b) {
+  return a <= b;
 });
 
 Meteor.subscribe('students');
