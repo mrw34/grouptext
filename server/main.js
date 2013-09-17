@@ -11,6 +11,7 @@ Meteor.Router.add('/message/:callback_path', function(callback_path) {
 
 Meteor.publish(null, function() {
   if (this.userId) {
+    console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
     return Meteor.users.find();
   }
 });
