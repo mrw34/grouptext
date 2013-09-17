@@ -1,8 +1,10 @@
 Meteor.Router.add('/message/:callback_path', function(callback_path) {
   if (callback_path === Meteor.settings.callback_path) {
     var message = to_message(this.request.query);
-    Messages.insert(message);
-    email(message);
+    if (message.from) {
+      Messages.insert(message);
+      email(message);
+    }
     return 200;
   }
 });
