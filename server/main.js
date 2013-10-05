@@ -100,13 +100,14 @@ var send = function(message) {
 
 var email = function(message) {
   Meteor.users.find({'profile.admin': true}).forEach(function(user) {
+    var from = message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn);
     var email = {
       to: user.emails[0].address,
-      from: 'GroupText <' + Meteor.settings.admin_email + '>',
+      from: from + ' (GroupText) <' + Meteor.settings.admin_email + '>',
       subject: 'New message',
       text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
       (message.to ? '\nTo: ' + message.to.map(function(id) { return Students.findOne(id).name; }).join(', ') : '') +
-      '\nMessage: ' + message.text
+      '\nMessage: ' + message.text + '\n\n' + Meteor.absoluteUrl()
     };
     console.log(email);
     Email.send(email);
