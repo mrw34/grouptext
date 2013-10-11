@@ -1,7 +1,6 @@
 {
   "name": "grouptext",
   "dependencies": {
-    "momentjs": "~2.2",
-    "bootstrap": "~3.0"
+    "momentjs": "~2.3"
   }
 }
