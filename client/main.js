@@ -137,11 +137,5 @@ Handlebars.registerHelper('lte', function(a, b) {
   return a <= b;
 });
 
-// BrowserPolicy.content.allowStyleOrigin('fonts.googleapis.com');
-// BrowserPolicy.content.allowFontOrigin('themes.googleusercontent.com');
-// BrowserPolicy.content.allowScriptOrigin('www.google-analytics.com');
-// BrowserPolicy.content.allowImageOrigin('www.google-analytics.com');
-// BrowserPolicy.content.allowEval();
-
 Meteor.subscribe('students');
 Meteor.subscribe('messages');
