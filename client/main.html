@@ -76,7 +76,7 @@
       <h2>Students</h2>
       <ul class="list-unstyled">
         {{#each students}}
-          <li style="display: table-row"><span style="display: table-cell;">{{name}}</span><span style="display: table-cell;" class="text-muted">{{phone}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
+          <li style="display: table-row"><span style="display: table-cell;">{{name}}</span><span style="display: table-cell;" class="text-muted">{{phone}}{{#if eq status 'failed'}}&nbsp;&nbsp;<span class="text-danger glyphicon glyphicon-exclamation-sign" title="The last message to this student failed"></span>{{/if}}</span><span style="display: table-cell;"><a href="#" data-id="{{_id}}">Delete</a></span></li>
         {{else}}
           <li class="text-muted">No students yet</li>
         {{/each}}

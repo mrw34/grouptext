@@ -1,10 +1,15 @@
-Meteor.Router.add('/message/:callback_path', function(callback_path) {
-  if (callback_path === Meteor.settings.callback_path) {
+Meteor.Router.add('/message/:callback', function(callback) {
+  if (callback === Meteor.settings.inbound_message_callback) {
     var message = to_message(this.request.query);
     if (message.from) {
       Messages.insert(message);
       email(message);
     }
+    return 200;
+  }
+  if (callback === Meteor.settings.delivery_receipt_callback) {
+    var receipt = this.request.query;
+    Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
     return 200;
   }
 });

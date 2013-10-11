@@ -2,7 +2,8 @@
 	"tel": "4412345678",
 	"api_key": "0123abcd",
 	"api_secret": "0123abcd",
-	"callback_path": "13ee24b7-8212-40bf-ae55-32e1e3c54b66",
+	"inbound_message_callback": "13ee24b7-8212-40bf-ae55-32e1e3c54b66",
+	"delivery_receipt_callback": "a8f4b12e-eda0-4b79-9d70-dd0266758078",
 	"admin_email": "username@yourdomain.com",
 	"admin_name": "John Doe"
 }
