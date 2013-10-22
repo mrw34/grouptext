@@ -20,8 +20,16 @@ blockquote.sent {
 	border-left-color: #3276b1;
 }
 
+blockquote small:before {
+	content: '';
+}
+
 blockquote.pull-right {
 	border-right-color: #3276b1;
+}
+
+blockquote.pull-right small:after {
+	content: '';
 }
 
 .list-unstyled > li > span {
