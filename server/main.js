@@ -1,17 +1,24 @@
-Meteor.Router.add('/message/:callback', function(callback) {
-  if (callback === Meteor.settings.inbound_message_callback) {
-    var message = to_message(this.request.query);
-    if (message.from) {
-      Messages.insert(message);
-      email(message);
+Router.map(function() {
+  this.route('message', {
+    where: 'server',
+    path: '/message/:callback',
+    action: function() {
+      if (this.params.callback === Meteor.settings.inbound_message_callback) {
+        var message = to_message(this.request.query);
+        console.log(message);
+        if (message.from) {
+          Messages.insert(message);
+          email(message);
+        }
+        return 200;
+      }
+      if (this.params.callback === Meteor.settings.delivery_receipt_callback) {
+        var receipt = this.request.query;
+        Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
+        return 200;
+      }
     }
-    return 200;
-  }
-  if (callback === Meteor.settings.delivery_receipt_callback) {
-    var receipt = this.request.query;
-    Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
-    return 200;
-  }
+  });
 });
 
 Meteor.publish(null, function() {

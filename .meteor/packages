@@ -9,9 +9,9 @@ accounts-ui
 http
 email
 standard-app-packages
-router
 page-js-ie-support
 HTML5-History-API
 audit-argument-checks
 bootstrap-3
 browser-policy
+iron-router

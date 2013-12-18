@@ -1,20 +1,20 @@
-Meteor.Router.add({
-  '/': 'home',
-  '/students': 'students',
-  '/tutors': 'tutors'
+Router.configure({
+  layoutTemplate: 'layout',
+  loadingTemplate: 'loading',
 });
-Meteor.Router.filters({
-  requireLogin: function(page) {
-    if (Meteor.loggingIn()) {
-      return 'loading';
-    } else if (Meteor.userId()) {
-      return page;
-    } else {
-      return 'login';
+Router.before(function() {
+    if (!Meteor.userId() && !Meteor.loggingIn()) {
+      this.render('login');
+      this.stop();
     }
-  }
+  }, {except: 'login'});
+Router.map(function() {
+  this.route('home', {
+    path: '/'
+  });
+  this.route('students');
+  this.route('tutors');
 });
-Meteor.Router.filter('requireLogin');
 
 Template.home.helpers({
   messages: function() {
@@ -135,6 +135,9 @@ Handlebars.registerHelper('eq', function(a, b) {
 });
 Handlebars.registerHelper('lte', function(a, b) {
   return a <= b;
+});
+Handlebars.registerHelper('currentPage', function(path) {
+  return Router.current().path === '/' + path;
 });
 
 Meteor.subscribe('students');
