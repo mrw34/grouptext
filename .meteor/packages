@@ -5,7 +5,6 @@
 
 preserve-inputs
 accounts-password
-accounts-ui
 http
 email
 standard-app-packages
@@ -16,3 +15,4 @@ bootstrap-3
 browser-policy
 iron-router
 autoupdate
+accounts-ui-bootstrap-3

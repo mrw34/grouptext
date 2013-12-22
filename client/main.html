@@ -27,7 +27,9 @@
             <li {{#if currentPage 'tutors'}}class="active"{{/if}}><a href="{{pathFor 'tutors'}}">Tutors</a></li>
           </ul>
           {{/if}}
-          <div class="navbar-text pull-right">{{loginButtons align="right"}}</div>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text pull-right">{{loginButtons align="right"}}</li>
+          </ul>
         </div>
       </div>
     </nav>
