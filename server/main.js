@@ -21,10 +21,10 @@ Router.map(function() {
   });
 });
 
-Meteor.publish(null, function() {
+Meteor.publish('allUserData', function() {
   if (this.userId) {
     console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
-    return Meteor.users.find();
+    return Meteor.users.find({}, {fields: {'profile': true, emails: true}});
   }
 });
 Meteor.users.allow({

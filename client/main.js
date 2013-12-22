@@ -20,7 +20,11 @@ Router.map(function() {
       return Meteor.subscribe('students');
     }
   });
-  this.route('tutors');
+  this.route('tutors', {
+    waitOn: function() {
+      return Meteor.subscribe('allUserData');
+    }
+  });
 });
 
 Template.home.helpers({
