@@ -1,18 +1,25 @@
 Router.configure({
   layoutTemplate: 'layout',
-  loadingTemplate: 'loading',
+  loadingTemplate: 'loading'
 });
 Router.before(function() {
-    if (!Meteor.userId() && !Meteor.loggingIn()) {
-      this.render('login');
-      this.stop();
-    }
-  }, {except: 'login'});
+  if (!Meteor.userId() && !Meteor.loggingIn()) {
+    this.render('login');
+    this.stop();
+  }
+}, {except: 'login'});
 Router.map(function() {
   this.route('home', {
-    path: '/'
+    path: '/',
+    waitOn: function() {
+      return [Meteor.subscribe('messages'), Meteor.subscribe('students')];
+    }
   });
-  this.route('students');
+  this.route('students', {
+    waitOn: function() {
+      return Meteor.subscribe('students');
+    }
+  });
   this.route('tutors');
 });
 
