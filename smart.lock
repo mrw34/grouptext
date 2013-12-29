@@ -2,9 +2,15 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "bootstrap-3": {},
-      "iron-router": {},
-      "accounts-ui-bootstrap-3": {}
+      "bootstrap-3": {
+        "version": "0.3.7"
+      },
+      "iron-router": {
+        "version": "0.6.1"
+      },
+      "accounts-ui-bootstrap-3": {
+        "version": "0.2.4"
+      }
     },
     "packages": {
       "bootstrap-3": {
