@@ -8,8 +8,6 @@ accounts-password
 http
 email
 standard-app-packages
-page-js-ie-support
-HTML5-History-API
 audit-argument-checks
 bootstrap-3
 browser-policy
