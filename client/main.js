@@ -80,7 +80,10 @@ Template.home.events({
       option.selected = false;
     });
     _.each(this.to ? this.to : [this.from], function(id) {
-      t.find('option[value=' + id + ']').selected = true;
+      var option = t.find('option[value=' + id + ']');
+      if (option) {
+        option.selected = true;
+      }
     });
   }
 });
