@@ -13,24 +13,31 @@ Router.map(function() {
     path: '/',
     waitOn: function() {
       return [Meteor.subscribe('messages'), Meteor.subscribe('students')];
+    },
+    data: {
+      messages: Messages.find({}, {sort: {created_at: -1}}),
+      students: Students.find({}, {sort: {name: 1}})
     }
   });
   this.route('students', {
     waitOn: function() {
       return Meteor.subscribe('students');
+    },
+    data: {
+      students: Students.find({}, {sort: {name: 1}})
     }
   });
   this.route('tutors', {
     waitOn: function() {
       return Meteor.subscribe('allUserData');
+    },
+    data: {
+      tutors: Meteor.users.find({}, {sort: {'profile.name': 1}})
     }
   });
 });
 
 Template.home.helpers({
-  messages: function() {
-    return Messages.find({}, {sort: {created_at: -1}});
-  },
   display_from: function() {
     if (this.to) {
       return this.from;
@@ -114,14 +121,6 @@ Template.students.events({
   }
 });
 
-Template.tutors.helpers({
-  tutors: function() {
-    return Meteor.users.find({}, {sort: {'profile.name': 1}});
-  },
-  email: function() {
-    return this.emails[0].address;
-  }
-});
 Template.tutors.events({
   'submit form': function(e) {
     e.preventDefault();
@@ -138,9 +137,6 @@ Template.tutors.events({
   }
 });
 
-Handlebars.registerHelper('students', function() {
-  return Students.find({}, {sort: {name: 1}});
-});
 Handlebars.registerHelper('eq', function(a, b) {
   return a === b;
 });
@@ -148,8 +144,5 @@ Handlebars.registerHelper('lte', function(a, b) {
   return a <= b;
 });
 Handlebars.registerHelper('currentPage', function(path) {
-  return Router.current().path === '/' + path;
+  return Router.current().path.substring(1) === path;
 });
-
-Meteor.subscribe('students');
-Meteor.subscribe('messages');
