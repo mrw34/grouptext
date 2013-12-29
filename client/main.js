@@ -55,27 +55,32 @@ Template.home.helpers({
   }
 });
 Template.home.events({
-  'submit form': function(e) {
+  'submit form': function(e, t) {
     e.preventDefault();
-    var values = _.chain($(e.target, ':input').serializeArray()).groupBy('name').pairs().map(function(e) { return [e[0], _.pluck(e[1], 'value')]; }).object().value();
+    var to = _.chain(t.findAll('option')).where({selected: true}).pluck('value').value();
+    var text = t.find('textarea').value;
     var message = {
       from: Meteor.user().profile.name,
-      to: values.recipients,
-      text: values.message[0],
+      to: to,
+      text: text,
       created_at: new Date()
     };
     Messages.insert(message);
     e.target.reset();
   },
-  'click label a': function(e) {
+  'click label a': function(e, t) {
     e.preventDefault();
-    $('option').prop('selected', true);
+    t.findAll('option').forEach(function(option) {
+      option.selected = true;
+    });
   },
-  'click blockquote a': function(e) {
+  'click blockquote a': function(e, t) {
     e.preventDefault();
-    $('option').prop('selected', false);
+    t.findAll('option').forEach(function(option) {
+      option.selected = false;
+    });
     _.each(this.to ? this.to : [this.from], function(id) {
-      $('option[value=' + id + ']').prop('selected', true);
+      t.find('option[value=' + id + ']').selected = true;
     });
   }
 });
@@ -89,10 +94,10 @@ Template.students.helpers({
   }
 });
 Template.students.events({
-  'submit form': function(e) {
+  'submit form': function(e, t) {
     e.preventDefault();
-    var name = $(e.target).find('input[name=name]').val();
-    var phone = $(e.target).find('input[name=phone]').val().replace(/ /g, '').replace(/^0/, '44');
+    var name = t.find('input[name=name]').value;
+    var phone = t.find('input[name=phone]').value.replace(/ /g, '').replace(/^0/, '44');
     Students.insert({name: name, phone: phone});
     e.target.reset();
   },
@@ -122,10 +127,10 @@ Template.students.events({
 });
 
 Template.tutors.events({
-  'submit form': function(e) {
+  'submit form': function(e, t) {
     e.preventDefault();
-    var name = $(e.target).find('input[name=name]').val();
-    var email = $(e.target).find('input[name=email]').val();
+    var name = t.find('input[name=name]').value;
+    var email = t.find('input[name=email]').value;
     Meteor.call('addUser', name, email);
     e.target.reset();
   },
