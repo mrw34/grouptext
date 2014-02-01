@@ -111,19 +111,21 @@ var send = function(message) {
 };
 
 var email = function(message) {
-  Meteor.users.find({'profile.admin': true}).forEach(function(user) {
-    var from = message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn);
-    var email = {
-      to: user.emails[0].address,
-      from: from + ' (GroupText) <' + Meteor.settings.admin_email + '>',
-      subject: 'New message',
-      text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
-      (message.to ? '\nTo: ' + message.to.map(function(id) { return Students.findOne(id).name; }).join(', ') : '') +
-      '\nMessage: ' + message.text + '\n\n' + Meteor.absoluteUrl()
-    };
-    console.log(email);
-    Email.send(email);
-  });
+  var from = message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn);
+  var admins = Meteor.users.find({'profile.admin': true}).map(function(user) { return user.emails[0].address; });
+  var email = {
+    //message from tutor: sms to student, email to admins
+    //message from student: email to last tutor to contact that student, bcc to admins
+    to: message.to ? admins : Meteor.users.findOne({'profile.name': Messages.findOne({to: message.from}, {sort: {created_at: -1}, limit: 1}).from}).emails[0].address,
+    bcc: message.to ? [] : admins,
+    from: from + ' (GroupText) <' + Meteor.settings.admin_email + '>',
+    subject: 'New message',
+    text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
+    (message.to ? '\nTo: ' + message.to.map(function(id) { return Students.findOne(id).name; }).join(', ') : '') +
+    '\nMessage: ' + message.text + '\n\nTo send a message visit ' + Meteor.absoluteUrl()
+  };
+  console.log(email);
+  Email.send(email);
 };
 
 Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
