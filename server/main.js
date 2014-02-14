@@ -54,7 +54,7 @@ Students.allow({
 
 Meteor.publish('messages', function() {
   if (this.userId) {
-    return Messages.find({}, {fields: {messages: false}});
+    return Messages.find({}, {fields: {messages: false}, sort: {created_at: -1}, limit: 20});
   }
 });
 Messages.allow({

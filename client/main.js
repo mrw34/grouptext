@@ -148,3 +148,5 @@ Handlebars.registerHelper('lte', function(a, b) {
 Handlebars.registerHelper('currentPage', function(path) {
   return Router.current().path.substring(1) === path;
 });
+
+moment.lang(navigator.language || navigator.userLanguage);
