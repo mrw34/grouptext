@@ -15,18 +15,18 @@ Router.map(function() {
   this.route('home', {
     path: '/',
     data: {
-      messages: Messages.find(),
-      students: Students.find()
+      messages: Messages.find({}, {sort: {created_at: -1}}),
+      students: Students.find({}, {sort: {name: 1}})
     }
   });
   this.route('students', {
     data: {
-      students: Students.find()
+      students: Students.find({}, {sort: {name: 1}})
     }
   });
   this.route('tutors', {
     data: {
-      tutors: Meteor.users.find()
+      tutors: Meteor.users.find({}, {sort: {'profile.name': 1}})
     }
   });
 });

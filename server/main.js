@@ -24,7 +24,7 @@ Router.map(function() {
 Meteor.publish('allUserData', function() {
   if (this.userId) {
     console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
-    return Meteor.users.find({}, {fields: {'profile': true, emails: true}, sort: {'profile.name': 1}});
+    return Meteor.users.find({}, {fields: {'profile': true, emails: true}});
   }
 });
 Meteor.users.allow({
@@ -40,7 +40,7 @@ Meteor.users.deny({
 
 Meteor.publish('students', function() {
   if (this.userId) {
-    return Students.find({}, {fields: Meteor.users.findOne(this.userId).profile.admin ? {} : {phone: false}, sort: {name: 1}});
+    return Students.find({}, {fields: Meteor.users.findOne(this.userId).profile.admin ? {} : {phone: false}});
   }
 });
 Students.allow({
@@ -54,7 +54,7 @@ Students.allow({
 
 Meteor.publish('messages', function() {
   if (this.userId) {
-    return Messages.find({}, {fields: {messages: false}, sort: {created_at: -1}, limit: 20});
+    return Messages.find({}, {fields: {messages: false}});
   }
 });
 Messages.allow({
