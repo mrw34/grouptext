@@ -7,32 +7,26 @@ Router.before(function() {
     this.render('login');
     this.stop();
   }
+  this.subscribe('messages').wait();
+  this.subscribe('students').wait();
+  this.subscribe('allUserData').wait();
 }, {except: 'login'});
 Router.map(function() {
   this.route('home', {
     path: '/',
-    waitOn: function() {
-      return [Meteor.subscribe('messages'), Meteor.subscribe('students')];
-    },
     data: {
-      messages: Messages.find({}, {sort: {created_at: -1}}),
-      students: Students.find({}, {sort: {name: 1}})
+      messages: Messages.find(),
+      students: Students.find()
     }
   });
   this.route('students', {
-    waitOn: function() {
-      return Meteor.subscribe('students');
-    },
     data: {
-      students: Students.find({}, {sort: {name: 1}})
+      students: Students.find()
     }
   });
   this.route('tutors', {
-    waitOn: function() {
-      return Meteor.subscribe('allUserData');
-    },
     data: {
-      tutors: Meteor.users.find({}, {sort: {'profile.name': 1}})
+      tutors: Meteor.users.find()
     }
   });
 });
