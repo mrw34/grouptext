@@ -1,6 +1,6 @@
 GroupText
 =========
-GroupText is a privacy-preserving group SMS web application originally developed for the [GCSE Success](http://gcsesuccess.wordpress.com/) tutoring programme. More information is available in [this blog post](http://markwoodbridge.com/2013/09/05/grouptext.html).
+GroupText is a privacy-preserving group SMS web application originally developed for the [GCSE Success](http://www.gcsesuccess.org/) tutoring programme. More information is available in [this blog post](http://markwoodbridge.com/2013/09/05/grouptext.html).
 
 It uses the [Nexmo](https://www.nexmo.com/) platform and is built with [Meteor](http://www.meteor.com/), [Iron Router](https://github.com/EventedMind/iron-router), [Moment.js](http://momentjs.com/) and [Bootstrap](http://getbootstrap.com/).
 
