@@ -2,10 +2,10 @@ Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading'
 });
-Router.before(function() {
+Router.onBeforeAction(function(pause) {
   if (!Meteor.userId() && !Meteor.loggingIn()) {
     this.render('login');
-    this.stop();
+    pause();
   }
   this.subscribe('messages').wait();
   this.subscribe('students').wait();
@@ -51,7 +51,7 @@ Template.home.helpers({
 Template.home.events({
   'submit form': function(e, t) {
     e.preventDefault();
-    var to = _.chain(t.findAll('option')).where({selected: true}).pluck('value').value();
+    var to = _.pluck(t.findAll('option:selected'), 'value');
     var text = t.find('textarea').value;
     var message = {
       from: Meteor.user().profile.name,
@@ -64,15 +64,11 @@ Template.home.events({
   },
   'click label a': function(e, t) {
     e.preventDefault();
-    t.findAll('option').forEach(function(option) {
-      option.selected = true;
-    });
+    t.findAll('option').prop('selected', true);
   },
   'click blockquote a': function(e, t) {
     e.preventDefault();
-    t.findAll('option').forEach(function(option) {
-      option.selected = false;
-    });
+    t.findAll('option').prop('selected', false);
     _.each(this.to ? this.to : [this.from], function(id) {
       var option = t.find('option[value=' + id + ']');
       if (option) {
@@ -139,13 +135,13 @@ Template.tutors.events({
   }
 });
 
-Handlebars.registerHelper('eq', function(a, b) {
+UI.registerHelper('eq', function(a, b) {
   return a === b;
 });
-Handlebars.registerHelper('lte', function(a, b) {
+UI.registerHelper('lte', function(a, b) {
   return a <= b;
 });
-Handlebars.registerHelper('currentPage', function(path) {
+UI.registerHelper('currentPage', function(path) {
   return Router.current().path.substring(1) === path;
 });
 

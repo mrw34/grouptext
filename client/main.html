@@ -7,36 +7,34 @@
 </head>
 
 <template name="layout">
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            {{#if currentUser.profile.admin}}
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            {{/if}}
-          </button>
-          <a class="navbar-brand" href="{{pathFor 'home'}}">GroupText</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          {{#if currentUser.profile.admin}}
-          <ul class="nav navbar-nav">
-            <li class="{{#if currentPage 'students'}}active{{/if}}"><a href="{{pathFor 'students'}}">Students</a></li>
-            <li class="{{#if currentPage 'tutors'}}active{{/if}}"><a href="{{pathFor 'tutors'}}">Tutors</a></li>
-          </ul>
-          {{/if}}
-          <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text pull-right">{{loginButtons align="right"}}</li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      {{yield}}
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          {{#if currentUser.profile.admin}}
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          {{/if}}
+        </button>
+        <a class="navbar-brand" href="{{pathFor 'home'}}">GroupText</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        {{#if currentUser.profile.admin}}
+        <ul class="nav navbar-nav">
+          <li class="{{#if currentPage 'students'}}active{{/if}}"><a href="{{pathFor 'students'}}">Students</a></li>
+          <li class="{{#if currentPage 'tutors'}}active{{/if}}"><a href="{{pathFor 'tutors'}}">Tutors</a></li>
+        </ul>
+        {{/if}}
+        <ul class="nav navbar-nav navbar-right">
+          <li class="navbar-text pull-right">{{> _loginButtons}}</li>
+        </ul>
+      </div>
     </div>
-  </body>
+  </nav>
+  <div class="container">
+    {{> yield}}
+  </div>
 </template>
 
 <template name="home">
@@ -117,7 +115,7 @@
       <h2>Tutors</h2>
       <ul class="list-unstyled">
         {{#each tutors}}
-          <li style="display: table-row"><span style="display: table-cell">{{profile.name}}</span><span style="display: table-cell">{{#if profile.admin}}<span class="label label-primary">admin</span>{{/if}}</span><span style="display: table-cell" class="text-muted">{{emails.0.address}}</span><span style="display: table-cell">{{#unless profile.admin}}<a href="#" data-id="{{_id}}">Delete</a>{{/unless}}</span></li>
+          <li style="display: table-row"><span style="display: table-cell">{{profile.name}}</span><span style="display: table-cell">{{#if profile.admin}}<span class="label label-primary">admin</span>{{/if}}</span><span style="display: table-cell" class="text-muted">{{emails.[0].address}}</span><span style="display: table-cell">{{#unless profile.admin}}<a href="#" data-id="{{_id}}">Delete</a>{{/unless}}</span></li>
         {{else}}
           <li class="text-muted">No tutors yet</li>
         {{/each}}
