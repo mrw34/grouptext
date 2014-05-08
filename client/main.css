@@ -12,10 +12,6 @@ h2 {
 	padding-bottom: 0.4em;
 }
 
-blockquote {
-	clear: right;
-}
-
 blockquote.sent {
 	border-left-color: #3276b1;
 }
@@ -24,11 +20,11 @@ blockquote small:before {
 	content: '';
 }
 
-blockquote.pull-right {
+blockquote.blockquote-reverse {
 	border-right-color: #3276b1;
 }
 
-blockquote.pull-right small:after {
+blockquote.blockquote-reverse small:after {
 	content: '';
 }
 

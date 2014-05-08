@@ -42,7 +42,7 @@
     <div class="col-sm-6 clearfix">
       <h2>Messages</h2>
       {{#each messages}}
-      <blockquote class="{{#unless to}}pull-right{{/unless}} {{#if sent}}sent{{/if}}">
+      <blockquote class="{{#unless to}}blockquote-reverse{{/unless}} {{#if sent}}sent{{/if}}">
         <p>{{text}}</p>
         <small>{{#if display_from}}{{#if display_from._id}}<a href="#">{{display_from.name}}</a>{{else}}{{display_from}}{{/if}}{{else}}Unknown{{/if}}{{#if to}} to <a href="#">{{#if lte recipients.length 2}}{{#each recipients}}<span class="csv">{{#if name}}{{name}}{{else}}Unknown{{/if}}</span>{{/each}}{{else}}{{recipients.length}} students{{/if}}</a>{{/if}} ({{display_date}})</small>
       </blockquote>
