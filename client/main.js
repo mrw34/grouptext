@@ -1,16 +1,21 @@
 Router.configure({
-  layoutTemplate: 'layout',
-  loadingTemplate: 'loading'
+  layoutTemplate: 'layout'
+});
+Router.waitOn(function() {
+  return [Meteor.subscribe('messages'), Meteor.subscribe('students'), Meteor.subscribe('allUserData')];
 });
 Router.onBeforeAction(function(pause) {
   if (!Meteor.userId() && !Meteor.loggingIn()) {
     this.render('login');
     pause();
+    return;
   }
-  this.subscribe('messages').wait();
-  this.subscribe('students').wait();
-  this.subscribe('allUserData').wait();
-}, {except: 'login'});
+  if (!this.ready()) {
+    this.render('loading');
+    pause();
+    return;
+  }
+});
 Router.map(function() {
   this.route('home', {
     path: '/',
