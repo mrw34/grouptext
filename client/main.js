@@ -69,11 +69,11 @@ Template.home.events({
   },
   'click label a': function(e, t) {
     e.preventDefault();
-    t.findAll('option').prop('selected', true);
+    t.$('option').prop('selected', true);
   },
   'click blockquote a': function(e, t) {
     e.preventDefault();
-    t.findAll('option').prop('selected', false);
+    t.$('option').prop('selected', false);
     _.each(this.to ? this.to : [this.from], function(id) {
       var option = t.find('option[value=' + id + ']');
       if (option) {
