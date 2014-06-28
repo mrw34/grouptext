@@ -55,7 +55,7 @@
       <form>
         <div class="form-group">
           <label>Recipients{{#if currentUser.profile.admin}} <a href="#"><small>Select all</small></a>{{/if}}</label>
-          <select class="form-control" name="recipients" multiple size="10" required>
+          <select class="form-control" name="recipients" multiple size="12" required>
             {{#each students}}
             <option value="{{_id}}">{{name}}</option>
             {{/each}}
