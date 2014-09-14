@@ -23,6 +23,5 @@ Build
 ```
 git clone https://github.com/mrw34/grouptext.git
 cd grouptext
-mrt install
 bower install
 ```
