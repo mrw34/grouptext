@@ -1,5 +1,5 @@
-settings.json
-settings.test.json
-server/initial-data.js
-.bower_components/
-client/analytics.js
+/settings.json
+/settings.test.json
+/.bower_components/
+/client/analytics.js
+/server/initial-data.js

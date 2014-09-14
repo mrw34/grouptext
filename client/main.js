@@ -150,4 +150,4 @@ UI.registerHelper('currentPage', function(path) {
   return Router.current().path.substring(1) === path;
 });
 
-moment.lang(navigator.language || navigator.userLanguage);
+moment.locale(navigator.language || navigator.userLanguage);
