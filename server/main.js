@@ -10,13 +10,12 @@ Router.map(function() {
           Messages.insert(message);
           email(message);
         }
-        return 200;
       }
       if (this.params.callback === Meteor.settings.delivery_receipt_callback) {
         var receipt = this.request.query;
         Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
-        return 200;
       }
+      this.response.end();
     }
   });
 });
