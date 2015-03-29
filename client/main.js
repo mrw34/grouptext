@@ -1,20 +1,19 @@
 Router.configure({
   layoutTemplate: 'layout'
 });
-Router.waitOn(function() {
+Router.subscriptions(function() {
   return [Meteor.subscribe('messages'), Meteor.subscribe('students'), Meteor.subscribe('allUserData')];
 });
-Router.onBeforeAction(function(pause) {
+Router.onBeforeAction(function() {
   if (!Meteor.userId() && !Meteor.loggingIn()) {
     this.render('login');
-    pause();
     return;
   }
   if (!this.ready()) {
     this.render('loading');
-    pause();
     return;
   }
+  this.next();
 });
 Router.map(function() {
   this.route('home', {
@@ -147,7 +146,7 @@ UI.registerHelper('lte', function(a, b) {
   return a <= b;
 });
 UI.registerHelper('currentPage', function(path) {
-  return Router.current().path.substring(1) === path;
+  return Router.current().url.substring(1) === path;
 });
 
 moment.locale(navigator.language || navigator.userLanguage);

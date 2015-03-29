@@ -1,30 +1,27 @@
 Router.map(function() {
-  this.route('message', {
-    where: 'server',
-    path: '/message/:callback',
-    action: function() {
-      if (this.params.callback === Meteor.settings.inbound_message_callback) {
-        var message = to_message(this.request.query);
-        console.log(message);
-        if (message.from) {
-          Messages.insert(message);
-          email(message);
-        }
+  this.route('message', {where: 'server', path: '/message/:callback'}).get(function() {
+    if (this.params.callback === Meteor.settings.inbound_message_callback) {
+      var message = to_message(this.request.query);
+      console.log(message);
+      if (message.from) {
+        Messages.insert(message);
+        email(message);
       }
-      if (this.params.callback === Meteor.settings.delivery_receipt_callback) {
-        var receipt = this.request.query;
-        Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
-      }
-      this.response.end();
     }
+    if (this.params.callback === Meteor.settings.delivery_receipt_callback) {
+      var receipt = this.request.query;
+      Students.update({'phone': receipt.msisdn}, {$set: {status: receipt.status}});
+    }
+    this.response.end();
   });
 });
 
 Meteor.publish('allUserData', function() {
-  if (this.userId) {
-    console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
-    return Meteor.users.find({}, {fields: {'profile': true, emails: true}});
+  if (!this.userId) {
+    return this.stop();
   }
+  console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
+  return Meteor.users.find({}, {fields: {'profile': true, emails: true}});
 });
 Meteor.users.allow({
   remove: function(userId) {
@@ -38,9 +35,10 @@ Meteor.users.deny({
 });
 
 Meteor.publish('students', function() {
-  if (this.userId) {
-    return Students.find({}, {fields: Meteor.users.findOne(this.userId).profile.admin ? {} : {phone: false}});
+  if (!this.userId) {
+    return this.stop();
   }
+  return Students.find({}, {fields: Meteor.users.findOne(this.userId).profile.admin ? {} : {phone: false}});
 });
 Students.allow({
   insert: function(userId) {
@@ -52,9 +50,10 @@ Students.allow({
 });
 
 Meteor.publish('messages', function() {
-  if (this.userId) {
-    return Messages.find({}, {fields: {messages: false}, sort: {created_at: -1}, limit: 20});
+  if (!this.userId) {
+    return this.stop();
   }
+  return Messages.find({}, {fields: {messages: false}, sort: {created_at: -1}, limit: 20});
 });
 Messages.allow({
   insert: function() {
