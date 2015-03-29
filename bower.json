@@ -1,6 +1,6 @@
 {
   "name": "grouptext",
   "dependencies": {
-    "momentjs": "~2.8"
+    "momentjs": "~2.9"
   }
 }
