@@ -156,8 +156,6 @@ Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
 
 BrowserPolicy.content.allowStyleOrigin('fonts.googleapis.com');
 BrowserPolicy.content.allowFontOrigin('fonts.gstatic.com');
-BrowserPolicy.content.allowScriptOrigin('www.google-analytics.com');
-BrowserPolicy.content.allowImageOrigin('www.google-analytics.com');
 
 Meteor.startup(function() {
   if (!Meteor.users.findOne()) {
