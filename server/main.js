@@ -68,7 +68,7 @@ Meteor.methods({
   addUser: function(name, email) {
     check(name, String);
     check(email, String);
-    if (!Meteor.users.findOne(this.userId).profile.admin) {
+    if (!Meteor.user().profile.admin) {
       throw new Meteor.Error(401, 'Unauthorized');
     }
     Accounts.createUser({
