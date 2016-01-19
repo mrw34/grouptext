@@ -1,3 +1,6 @@
+/* global console, moment, BrowserPolicy */
+/* global Messages, Students */
+
 Router.map(function() {
   this.route('message', {where: 'server', path: '/message/:callback'}).get(function() {
     if (this.params.callback === Meteor.settings.inbound_message_callback) {
@@ -20,7 +23,7 @@ Meteor.publish('allUserData', function() {
   if (!this.userId) {
     return this.stop();
   }
-  console.log(Meteor.users.findOne(this.userId).emails[0].address + ' logged in');
+  console.log(Meteor.users.findOne(this.userId).emails[0].address, 'logged in');
   return Meteor.users.find({}, {fields: {'profile': true, emails: true}});
 });
 Meteor.users.allow({
@@ -62,7 +65,7 @@ Messages.allow({
 });
 
 Accounts.emailTemplates.siteName = 'GroupText';
-Accounts.emailTemplates.from = 'GroupText <' + Meteor.settings.admin_email + '>';
+Accounts.emailTemplates.from = `GroupText <${Meteor.settings.admin_email}>`;
 
 Meteor.methods({
   addUser: function(name, email) {
@@ -81,7 +84,7 @@ Meteor.methods({
   }
 });
 
-var to_message = function(sms) {
+function to_message(sms) {
   var message = {
     text: sms.text,
     created_at: moment(sms['message-timestamp']).toDate(),
@@ -94,9 +97,9 @@ var to_message = function(sms) {
     });
   }
   return message;
-};
+}
 
-var send = function(message) {
+function send(message) {
   return Meteor.settings.api_key ?
     HTTP.get('https://rest.nexmo.com/sms/json', {params: {
       api_key: Meteor.settings.api_key,
@@ -106,25 +109,29 @@ var send = function(message) {
       text: message.text
     }}) :
     { data: { messages: [ {status: '0' } ] } };
-};
+}
 
-var email = function(message) {
+function email(message) {
   var from = message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn);
-  var admins = Meteor.users.find({'profile.admin': true}).map(function(user) { return user.emails[0].address; });
+  var admins = Meteor.users.find({'profile.admin': true}).map(function(user) {
+    return user.emails[0].address;
+  });
   var email = {
     //message from tutor: sms to student, email to admins
     //message from student: email to last tutor to contact that student, bcc to admins
     to: message.to ? admins : Meteor.users.findOne({'profile.name': Messages.findOne({to: message.from}, {sort: {created_at: -1}, limit: 1}).from}).emails[0].address,
     bcc: message.to ? [] : admins,
-    from: from + ' (GroupText) <' + Meteor.settings.admin_email + '>',
+    from: `${from} (GroupText) <${Meteor.settings.admin_email}>`,
     subject: 'New message',
     text: 'From: ' + (message.to ? message.from : (Students.findOne(message.from) ? Students.findOne(message.from).name : message.messages[0].msisdn)) +
-    (message.to ? '\nTo: ' + message.to.map(function(id) { return Students.findOne(id).name; }).join(', ') : '') +
+    (message.to ? '\nTo: ' + message.to.map(function(id) {
+      return Students.findOne(id).name;
+    }).join(', ') : '') +
     '\nMessage: ' + message.text + '\n\nTo send a message visit ' + Meteor.absoluteUrl()
   };
   console.log(email);
   Email.send(email);
-};
+}
 
 Messages.find({to: {$exists: true}, sent: {$exists: false}}).observe({
   _suppress_initial: true,
