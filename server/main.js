@@ -69,11 +69,9 @@ Accounts.emailTemplates.from = `GroupText <${Meteor.settings.admin_email}>`;
 
 Meteor.methods({
   addUser: function(name, email) {
+    check(Meteor.user().profile.admin, true);
     check(name, String);
     check(email, String);
-    if (!Meteor.user().profile.admin) {
-      throw new Meteor.Error(401, 'Unauthorized');
-    }
     Accounts.createUser({
       email: email,
       profile: {
