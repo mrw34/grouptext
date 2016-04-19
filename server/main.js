@@ -1,6 +1,8 @@
 /* global console, moment, BrowserPolicy */
 /* global Messages, Students */
 
+const moment = require('moment');
+
 Router.map(function() {
   this.route('message', {where: 'server', path: '/message/:callback'}).get(function() {
     if (this.params.callback === Meteor.settings.inbound_message_callback) {

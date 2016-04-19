@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 Router.configure({
   layoutTemplate: 'layout'
 });

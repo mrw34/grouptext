@@ -24,7 +24,6 @@ check
 email
 http
 iron:router
-momentjs:moment
 ian:accounts-ui-bootstrap-3
 package-stats-opt-out
 twbs:bootstrap
