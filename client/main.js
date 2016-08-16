@@ -1,4 +1,5 @@
 const moment = require('moment');
+require('moment/locale/en-gb');
 
 Router.configure({
   layoutTemplate: 'layout'
