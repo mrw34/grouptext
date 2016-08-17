@@ -1,0 +1,12 @@
+{
+  "extends": "eslint:all",
+  "rules": {
+    "indent": ["error", 2],
+    "padded-blocks": "off",
+    "quotes": ["error", "single"],
+    "space-before-function-paren": "off"
+  },
+  "env": {
+    "es6": true
+  }
+}
