@@ -66,7 +66,7 @@ mongo@1.1.12_5
 mongo-id@1.0.5
 npm-bcrypt@0.9.1_1
 npm-mongo@2.2.10_1
-observe-sequence@1.0.12
+observe-sequence@1.0.13
 ordered-dict@1.0.8
 package-stats-opt-out@1.0.7
 promise@0.8.7
