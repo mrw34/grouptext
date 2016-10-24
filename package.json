@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "moment": "^2.15.1"
   },
   "devDependencies": {
