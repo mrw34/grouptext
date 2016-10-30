@@ -3,8 +3,5 @@
     "bcrypt": "^0.8.7",
     "moment": "^2.15.2"
   },
-  "devDependencies": {
-    "eslint": "^3.8.1"
-  },
   "private": true
 }
